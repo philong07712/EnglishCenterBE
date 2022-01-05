@@ -1,6 +1,5 @@
 package com.example.EnglishCenterBE.data;
 
-import com.example.EnglishCenterBE.models.Student;
 import com.example.EnglishCenterBE.utils.FirestorePathUtil;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.DocumentReference;
@@ -20,17 +19,17 @@ public class StudentService {
         db = FirestoreClient.getFirestore();
     }
 
-    public Student getStudent(String id) {
-        if (id != null) {
-            DocumentReference documentRef = FirestorePathUtil.getPathStudent(db, id);
-            try {
-                ApiFuture<DocumentSnapshot> snapshot = documentRef.get();
-                Student student = Student.JSONParser(snapshot.get().getData());
-                return student;
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        return null;
-    }
+//    public Student getStudent(String id) {
+//        if (id != null) {
+//            DocumentReference documentRef = FirestorePathUtil.getPathAccount(db, id);
+//            try {
+//                ApiFuture<DocumentSnapshot> snapshot = documentRef.get();
+//                Student student = Student.JSONParser(snapshot.get().getData());
+//                return student;
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        return null;
+//    }
 }
