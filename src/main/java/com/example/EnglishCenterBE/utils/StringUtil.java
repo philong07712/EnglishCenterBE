@@ -21,6 +21,7 @@ public class StringUtil {
         String subject = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).
                 getBody().getSubject();
         account.setRole(RoleUtils.getRoleFromUsername(subject));
+        System.out.println(RoleUtils.getRoleFromUsername(subject));
         account.setUsername(subject);
         return account;
     }

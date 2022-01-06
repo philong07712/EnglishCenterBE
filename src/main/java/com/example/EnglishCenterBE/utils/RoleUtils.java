@@ -3,6 +3,7 @@ package com.example.EnglishCenterBE.utils;
 public class RoleUtils {
     public static String getRoleFromUsername(String subject) {
         String subRole = subject.substring(0, 2);
+        System.out.println("subRole: " + subRole);
         return convertSubRoleToRole(subRole);
     }
 

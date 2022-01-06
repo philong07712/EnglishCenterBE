@@ -54,6 +54,6 @@ public class GeneralResource {
         if (info == null) {
             return Response.status(400).build();
         }
-        return Response.ok().entity(info.toJSONObject()).build();
+        return Response.ok().entity(info.toJSONObject(true)).build();
     }
 }

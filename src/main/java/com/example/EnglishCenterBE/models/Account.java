@@ -54,14 +54,17 @@ public class Account {
         return null;
     }
 
-    public Map<String, Object> toJSONObject() throws Exception {
+    public Map<String, Object> toJSONObject(boolean isFullData) throws Exception {
         Map<String, Object> jo = new HashMap<>();
         jo.put("TK", username);
-        jo.put("MK", password);
-        jo.put("Role", role);
-        jo.put("isActive", isActive);
+        // hide private information
+        if (isFullData) {
+            jo.put("MK", password);
+            jo.put("MaCanCuoc", identityId);
+            jo.put("Role", role);
+            jo.put("isActive", isActive);
+        }
         jo.put("HoTen", name);
-        jo.put("MaCanCuoc", identityId);
         jo.put("NgaySinh", bornDate);
         jo.put("GioiTinh", sex);
         jo.put("DiaChi", address);

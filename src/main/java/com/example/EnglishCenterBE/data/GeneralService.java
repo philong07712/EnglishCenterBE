@@ -34,8 +34,6 @@ public class GeneralService {
         if (username == null || newPassword == null) return false;
         DocumentReference documentRef = FirestorePathUtil.getPathAccount(db, username);
         try {
-            System.out.println("newPassword: " + newPassword);
-            System.out.println("username: " + username);
             documentRef.update("MK", newPassword);
             return true;
         } catch (Exception e) {

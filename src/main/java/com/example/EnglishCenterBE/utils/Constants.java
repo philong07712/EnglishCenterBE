@@ -9,7 +9,7 @@ public class Constants {
     }
 
     public static class SubRole {
-        public static String ADMIN = "AD";
+        public static String ADMIN = "ad";
         public static String MANAGER = "MG";
         public static String TEACHER = "GV";
         public static String STUDENT = "HS";
