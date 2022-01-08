@@ -3,11 +3,9 @@ package com.example.EnglishCenterBE.data;
 import com.example.EnglishCenterBE.models.Class;
 import com.example.EnglishCenterBE.models.Score;
 import com.example.EnglishCenterBE.utils.FirestorePathUtil;
+import com.example.EnglishCenterBE.utils.StringUtil;
 import com.google.api.core.ApiFuture;
-import com.google.cloud.firestore.CollectionReference;
-import com.google.cloud.firestore.Firestore;
-import com.google.cloud.firestore.QueryDocumentSnapshot;
-import com.google.cloud.firestore.QuerySnapshot;
+import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
 
 import java.util.ArrayList;
@@ -54,5 +52,17 @@ public class ScoreService {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static void addScore(Score score) {
+        if (score == null) return;
+        try {
+            CollectionReference collectionRef = FirestorePathUtil.getPathScore(db);
+            String id = score.getStudentId() + "_" + score.getClassId();
+            score.setId(id);
+            ApiFuture<WriteResult> writeResult = collectionRef.document(id).set(score.toJSONObject(), SetOptions.merge());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

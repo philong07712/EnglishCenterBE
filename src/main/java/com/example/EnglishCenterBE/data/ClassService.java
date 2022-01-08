@@ -35,6 +35,27 @@ public class ClassService {
         return null;
     }
 
+    public static List<Class> getClassListWithTeacher(String teacherId) {
+        if (teacherId == null) return null;
+        List<Class> list = new ArrayList<>();
+        CollectionReference collectionRef = FirestorePathUtil.getPathClass(db);
+        ApiFuture<QuerySnapshot> classQuery = collectionRef.whereEqualTo("MaGiangVien", teacherId).get();
+        try {
+            QuerySnapshot classSnapshot = classQuery.get();
+            for (QueryDocumentSnapshot snapshot : classSnapshot.getDocuments()) {
+                Class studentClass = Class.JSONParser(snapshot.getData());
+                if (studentClass != null) {
+                    list.add(studentClass);
+                }
+            }
+            return list;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
     public static Map<String, Object> getClassDetail(String classId) {
         if (classId == null) return null;
         Map<String, Object> map = new HashMap<>();

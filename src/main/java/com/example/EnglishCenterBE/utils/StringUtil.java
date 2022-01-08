@@ -8,6 +8,18 @@ import java.nio.charset.StandardCharsets;
 
 public class StringUtil {
     public static byte[] key = Constants.Secret.TOKEN_KEY.getBytes(StandardCharsets.UTF_8);
+    private static final String ALPHA_NUMERIC_STRING = "0123456789";
+    private static final String ALPHABET_CHARACTER = "abcdefghijkmnopqrstuvwxyz0123456789";
+
+    public static String getRandom(int num) {
+        int count = num;
+        StringBuilder builder = new StringBuilder();
+        while (count-- != 0) {
+            int character = (int) (Math.random() * ALPHABET_CHARACTER.length());
+            builder.append(ALPHABET_CHARACTER.charAt(character));
+        }
+        return builder.toString();
+    }
 
     public static String generateToken(String username) {
         return Jwts.builder().setIssuer("http://EnglishCenter.com/")

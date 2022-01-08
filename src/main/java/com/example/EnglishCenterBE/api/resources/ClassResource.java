@@ -45,6 +45,27 @@ public class ClassResource {
         return Response.ok().entity(list).build();
     }
 
+    @Path("list/teacherClass/{teacherId}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getClassListTeacher(@Context HttpHeaders httpHeaders, @PathParam("teacherId") String teacherId)
+            throws Exception {
+        String token = httpHeaders.getHeaderString("Authorization");
+        Account account = StringUtil.verifyUser(token);
+        // if not that specific student then we will not show the data
+        if (account.getRole().equals(Constants.Role.STUDENT)) {
+            return Response.status(400).build();
+        }
+        List<Class> classes = ClassService.getClassListWithTeacher(teacherId);
+        if (classes == null) return Response.status(400).build();
+        List<Map<String, Object>> list = new ArrayList<>();
+        for (Class studentClass : classes) {
+            list.add(studentClass.toJSONObject());
+        }
+        return Response.ok().entity(list).build();
+    }
+
+
     @Path("{classId}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)

@@ -12,6 +12,7 @@ public class Class {
     private String room;
     private String time;
     private String teacherName;
+    private boolean isActive = true;
     public Class() {
 
     }
@@ -27,6 +28,9 @@ public class Class {
             studentClass.teacherName = (String) jo.get("TenGiangVien");
             if (jo.get("HocVien") != null) {
                 studentClass.students = (List<String>) jo.get("HocVien");
+            }
+            if (jo.get("isActive") != null) {
+                studentClass.isActive = (Boolean) jo.get("isActive");
             }
             System.out.println("Error here");
             return studentClass;
@@ -47,6 +51,22 @@ public class Class {
         jo.put("HocVien", students);
 
         return jo;
+    }
+
+    public String getTeacherName() {
+        return teacherName;
+    }
+
+    public void setTeacherName(String teacherName) {
+        this.teacherName = teacherName;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
     }
 
     public String getId() {

@@ -45,7 +45,7 @@ public class GeneralResource {
     }
 
     @Path("info")
-    @GET
+    @POST
     @Produces(MediaType.APPLICATION_JSON)
     public Response getInfo(@Context HttpHeaders httpHeaders) throws Exception {
         String token = httpHeaders.getHeaderString("Authorization");

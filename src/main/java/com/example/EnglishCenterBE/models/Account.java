@@ -26,9 +26,15 @@ public class Account {
         try {
             Account account = new Account();
             account.username = (String) jo.get("TK");
-            account.password = (String) jo.get("MK");
-            account.role = (String) jo.get("Role");
-            account.isActive = (Boolean) jo.get("isActive");
+            if (jo.get("MK") != null) {
+                account.password = (String) jo.get("MK");
+            }
+            if (jo.get("Role") != null) {
+                account.role = (String) jo.get("Role");
+            }
+            if (jo.get("isActive") != null) {
+                account.isActive = (Boolean) jo.get("isActive");
+            }
             if (jo.get("HoTen") != null) {
                 account.name = (String) jo.get("HoTen");
             }

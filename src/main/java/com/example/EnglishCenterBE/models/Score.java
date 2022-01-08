@@ -8,10 +8,10 @@ public class Score {
     private String studentId;
     private String classId;
     private String className;
-    private double btScore;
-    private double ckScore;
-    private double gkScore;
-    private double tbScore;
+    private double btScore = -1;
+    private double ckScore = -1;
+    private double gkScore = -1;
+    private double tbScore = -1;
 
     public Score() {
 
@@ -20,14 +20,30 @@ public class Score {
     public static Score JSONParser(Map<String, Object> jo) {
         try {
             Score score = new Score();
-            score.id = (String) jo.get("ID");
-            score.studentId = (String) jo.get("MaHocVien");
-            score.classId = (String) jo.get("MaLop");
-            score.className = (String) jo.get("TenLop");
-            score.btScore = Double.parseDouble((String) jo.get("DiemBT"));
-            score.ckScore = Double.parseDouble((String) jo.get("DiemCK"));
-            score.gkScore = Double.parseDouble((String) jo.get("DiemGK"));
-            score.tbScore = Double.parseDouble((String) jo.get("DiemTB"));
+            if (jo.get("ID") != null) {
+                score.id = (String) jo.get("ID");
+            }
+            if (jo.get("MaHocVien") != null) {
+                score.studentId = (String) jo.get("MaHocVien");
+            }
+            if (jo.get("MaLop") != null) {
+                score.classId = (String) jo.get("MaLop");
+            }
+            if (jo.get("TenLop") != null) {
+                score.className = (String) jo.get("TenLop");
+            }
+            if (jo.get("DiemBT") != null) {
+                score.btScore = Double.parseDouble((String) jo.get("DiemBT"));
+            }
+            if (jo.get("DiemCK") != null) {
+                score.ckScore = Double.parseDouble((String) jo.get("DiemCK"));
+            }
+            if (jo.get("DiemGK") != null) {
+                score.gkScore = Double.parseDouble((String) jo.get("DiemGK"));
+            }
+            if (jo.get("DiemTB") != null) {
+                score.tbScore = Double.parseDouble((String) jo.get("DiemTB"));
+            }
             return score;
         } catch (Exception e) {
             e.printStackTrace();
@@ -41,10 +57,18 @@ public class Score {
         jo.put("MaHocVien", studentId);
         jo.put("MaLop", classId);
         jo.put("TenLop", className);
-        jo.put("DiemBT", btScore);
-        jo.put("DiemCK", ckScore);
-        jo.put("DiemGK", gkScore);
-        jo.put("DiemTB", tbScore);
+        if (btScore != -1) {
+            jo.put("DiemBT", btScore);
+        }
+        if (ckScore != -1) {
+            jo.put("DiemCK", ckScore);
+        }
+        if (gkScore != -1) {
+            jo.put("DiemGK", gkScore);
+        }
+        if (tbScore != -1) {
+            jo.put("DiemTB", tbScore);
+        }
         return jo;
     }
 
