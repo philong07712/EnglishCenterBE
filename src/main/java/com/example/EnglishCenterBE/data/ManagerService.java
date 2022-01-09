@@ -9,7 +9,6 @@ import java.util.Set;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-import com.example.EnglishCenterBE.models.Account;
 import com.example.EnglishCenterBE.models.Class;
 import com.example.EnglishCenterBE.utils.FirestorePathUtil;
 import com.google.api.core.ApiFuture;
@@ -35,14 +34,16 @@ public class ManagerService {
 	}
 	
 	public boolean addClass(String jo) {
-		
+		calendarService check = new calendarService().getInstance();
 		try {
 			JSONObject obj = (JSONObject) new JSONParser().parse(jo);
 			Class lop = (Class) Class.JSONParser(obj);
 			
 			if (getClass(lop.getId())!=null) {
 				  	return false;
-				} 
+				}
+			if (!check.CheckCalendarTeacher(lop.getTime(), lop.getTeacherId(), lop.getId())) 
+				return false;
 			else {
 					new FirebaseDBService().getInstance().pushClass(lop);
 					return true;
@@ -69,16 +70,24 @@ public class ManagerService {
 	}
 	
 	public boolean updateInforClass(String id,String jo) {
+		calendarService check = new calendarService().getInstance();
 		try {
 			JSONObject obj = (JSONObject) new JSONParser().parse(jo);
 			Class lop = getClass(id);
 			if(lop!=null) {
+				if (!check.CheckCalendarTeacher((String)obj.get("GioHoc"),(String) obj.get("MaGiangVien"), id)) 
+					return false;
+				if(lop.getStudents()!=null && lop.getStudents().size()!=0)	
+					if (!check.CheckCalendarStudents((String)obj.get("GioHoc"),lop.getStudents(), id))
+						return false;
+		
 				lop.setId((String) obj.get("MaLop"));
 				lop.setName((String) obj.get("TenLop"));
 				lop.setTeacherId((String) obj.get("MaGiangVien"));
 				lop.setTeacherName((String) obj.get("TenGiangVien"));
 				lop.setRoom((String) obj.get("PhongHoc"));
 				lop.setTime((String) obj.get("GioHoc"));
+			
 				new FirebaseDBService().getInstance().pushClass(lop);
 				return true;
 			}
@@ -103,6 +112,7 @@ public class ManagerService {
 	}
 	
 	public boolean addStudents(String id, String jo) {
+		calendarService check = new calendarService().getInstance();
 		try {
 			JSONObject obj = (JSONObject) new JSONParser().parse(jo);
 			List<String> newStudents = new ArrayList<String>();
@@ -121,6 +131,11 @@ public class ManagerService {
 		    List<String> newList = new ArrayList<String>(newSet);
 		    Collections.sort(newList);
 			lop.setStudents(newList);
+			
+			if(lop.getStudents()!=null && lop.getStudents().size()!=0)	
+				if (!check.CheckCalendarStudents(lop.getTime(),lop.getStudents(), id))
+					return false;
+			
 			new FirebaseDBService().getInstance().pushClass(lop);
 			return true;
 		} catch (Exception e) {
