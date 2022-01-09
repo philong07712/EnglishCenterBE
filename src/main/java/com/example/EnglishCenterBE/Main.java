@@ -1,32 +1,17 @@
 package com.example.EnglishCenterBE;
 
-import com.example.EnglishCenterBE.utils.Constants;
-import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-
-import java.nio.charset.StandardCharsets;
-import java.security.SignatureException;
+import com.example.EnglishCenterBE.models.Account;
 
 public class Main {
-    public static void main(String[] args) {
-        byte[] key = Constants.Secret.TOKEN_KEY.getBytes(StandardCharsets.UTF_8);
-
-        String jwt = Jwts.builder().setIssuer("http://EnglishCenter.com/")
-                .setSubject("GV100001")
-                .signWith(SignatureAlgorithm.HS256,key)
-                .compact();
-
-        System.out.println(jwt);
-
-        System.out.println("Get data back");
-
-        try {
-            String subject = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(jwt).
-                    getBody().getSubject();
-            System.out.println(subject);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public static void main(String[] args) throws Exception {
+//        SearchConfig config = new SearchConfig.Builder("MYD7AI1L1X", "8adec4a44adc97fc1934215be52b20a3").build();
+//        SearchClient client = new SearchClient(config, new JavaNetHttpRequester(config));
+//        SearchIndex index = client.initIndex("Posts");
+//
+//        SearchResult<Account> search1 = index.search(new Query("Hùng"));
+//        System.out.println(search1.getHits());
+//        for (Account a : search1.getHits()) {
+//            System.out.println(a.toJSONObject(true));
+//        }
     }
 }

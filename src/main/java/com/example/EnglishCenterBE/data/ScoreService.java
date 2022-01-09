@@ -17,6 +17,7 @@ public class ScoreService {
     public static List<Score> getScoreList(String username) {
         if (username == null) return null;
         List<Score> list = new ArrayList<>();
+        System.out.println("username get score list: " + username);
         CollectionReference collectionRef = FirestorePathUtil.getPathScore(db);
         ApiFuture<QuerySnapshot> scoreQuery = collectionRef.whereEqualTo("MaHocVien", username).get();
         try {

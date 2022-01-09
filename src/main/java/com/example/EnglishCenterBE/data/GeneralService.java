@@ -17,6 +17,7 @@ public class GeneralService {
         DocumentReference documentRef = FirestorePathUtil.getPathAccount(db, username);
         try {
             ApiFuture<DocumentSnapshot> snapshot = documentRef.get();
+            System.out.println(snapshot.get().getData());
             Account account =  Account.JSONParser(snapshot.get().getData());
             if (account != null) {
                 if (password.equals(account.getPassword()) && account.isActive()) {

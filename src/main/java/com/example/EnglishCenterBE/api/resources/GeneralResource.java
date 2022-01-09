@@ -37,6 +37,7 @@ public class GeneralResource {
     public Response changePassword(@Context HttpHeaders httpHeaders, @PathParam("newPassword") String newPassword) {
         String token = httpHeaders.getHeaderString("Authorization");
         Account account = StringUtil.verifyUser(token);
+        System.out.println(account.getUsername());
         boolean isSuccess = GeneralService.changePassword(account.getUsername(), newPassword);
         if (!isSuccess) {
             return Response.status(400).build();
