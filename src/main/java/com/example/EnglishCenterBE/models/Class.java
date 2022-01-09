@@ -12,7 +12,7 @@ public class Class {
     private String room;
     private String time;
     private String teacherName;
-    private boolean isActive = true;
+    private boolean isActive=true;
     public Class() {
 
     }
@@ -30,9 +30,8 @@ public class Class {
                 studentClass.students = (List<String>) jo.get("HocVien");
             }
             if (jo.get("isActive") != null) {
-                studentClass.isActive = (Boolean) jo.get("isActive");
+                studentClass.isActive = (boolean) jo.get("isActive");
             }
-            System.out.println("Error here");
             return studentClass;
         } catch (Exception e) {
             e.printStackTrace();
@@ -49,24 +48,8 @@ public class Class {
         jo.put("GioHoc", time);
         jo.put("TenGiangVien", teacherName);
         jo.put("HocVien", students);
-
+        jo.put("isActive", isActive);
         return jo;
-    }
-
-    public String getTeacherName() {
-        return teacherName;
-    }
-
-    public void setTeacherName(String teacherName) {
-        this.teacherName = teacherName;
-    }
-
-    public boolean isActive() {
-        return isActive;
-    }
-
-    public void setActive(boolean active) {
-        isActive = active;
     }
 
     public String getId() {
@@ -116,4 +99,21 @@ public class Class {
     public void setTime(String time) {
         this.time = time;
     }
+
+	public String getTeacherName() {
+		return teacherName;
+	}
+
+	public void setTeacherName(String teacherName) {
+		this.teacherName = teacherName;
+	}
+
+	public boolean isActive() {
+		return isActive;
+	}
+
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
+	}
+    
 }

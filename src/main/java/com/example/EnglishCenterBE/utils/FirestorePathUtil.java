@@ -9,19 +9,17 @@ public class FirestorePathUtil {
     public static CollectionReference getPathAccountCollection(Firestore db) {
         return db.collection("TAIKHOAN");
     }
-    public static DocumentReference getPathAccount(Firestore db, String id) {
-        return db.collection("TAIKHOAN").document(id);
-    }
-
-    public static CollectionReference getPathClass(Firestore db) {
-        return db.collection("LOP");
-    }
-
-    public static DocumentReference getPathClassDetail(Firestore db, String classId) {
-        return db.collection("LOP").document(classId);
-    }
 
     public static CollectionReference getPathScore(Firestore db) {
         return db.collection("DIEMTHI");
+    }
+    public static DocumentReference getPathAccount(Firestore db, String id) {
+        return db.collection("TAIKHOAN").document(id);
+    }
+    public static CollectionReference getPathClass(Firestore db) {
+        return db.collection("LOP");
+    }
+    public static DocumentReference getPathClassDetail(Firestore db, String classId) {
+        return db.collection("LOP").document(classId);
     }
 }

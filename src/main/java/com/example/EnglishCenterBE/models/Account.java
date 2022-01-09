@@ -1,22 +1,22 @@
 package com.example.EnglishCenterBE.models;
 
-import com.google.cloud.Timestamp;
-
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+import com.google.cloud.Timestamp;
 
 public class Account {
     private String username;
     private String password;
     private String role;
     private boolean isActive;
-    String name;
-    String identityId;
-    Date bornDate;
-    boolean sex;
-    String address;
-    String phoneNumber;
+    private String name;
+    private String identityId;
+    private Date bornDate;
+    private boolean sex;
+    private String address;
+    private String phoneNumber;
 
     public Account() {
 
@@ -109,4 +109,52 @@ public class Account {
     public void setActive(boolean active) {
         isActive = active;
     }
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getIdentityId() {
+		return identityId;
+	}
+
+	public void setIdentityId(String identityId) {
+		this.identityId = identityId;
+	}
+
+	public Date getBornDate() {
+		return bornDate;
+	}
+
+	public void setBornDate(Date bornDate) {
+		this.bornDate = bornDate;
+	}
+
+	public boolean isSex() {
+		return sex;
+	}
+
+	public void setSex(boolean sex) {
+		this.sex = sex;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
 }
