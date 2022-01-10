@@ -19,8 +19,8 @@ public class ApplicationConfig extends ResourceConfig {
         System.out.println("Init application");
         try {
             //TODO: change path before push to heroku
-//            FileInputStream serviceAccount = new FileInputStream("./ServiceAccountKey.json");
-            FileInputStream serviceAccount = new FileInputStream("C:\\Users\\OS\\Desktop\\Work\\EnglishCenterBE\\ServiceAccountKey.json");
+            FileInputStream serviceAccount = new FileInputStream("./ServiceAccountKey.json");
+//            FileInputStream serviceAccount = new FileInputStream("C:\\Users\\OS\\Desktop\\Work\\EnglishCenterBE\\ServiceAccountKey.json");
             FirebaseOptions options = new FirebaseOptions.Builder()
                     .setCredentials(GoogleCredentials.fromStream(serviceAccount))
                     .setDatabaseUrl("https://englishcenter-6e5e5-default-rtdb.firebaseio.com")
