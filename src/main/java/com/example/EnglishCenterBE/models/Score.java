@@ -58,16 +58,16 @@ public class Score {
         jo.put("MaLop", classId);
         jo.put("TenLop", className);
         if (btScore != -1) {
-            jo.put("DiemBT", btScore);
+            jo.put("DiemBT", btScore + "");
         }
         if (ckScore != -1) {
-            jo.put("DiemCK", ckScore);
+            jo.put("DiemCK", ckScore + "");
         }
         if (gkScore != -1) {
-            jo.put("DiemGK", gkScore);
+            jo.put("DiemGK", gkScore + "");
         }
         if (tbScore != -1) {
-            jo.put("DiemTB", tbScore);
+            jo.put("DiemTB", tbScore + "");
         }
         return jo;
     }
