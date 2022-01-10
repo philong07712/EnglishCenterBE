@@ -12,11 +12,17 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import com.example.EnglishCenterBE.data.ManagerService;
+import com.example.EnglishCenterBE.models.Account;
+import com.example.EnglishCenterBE.models.Calendar;
 import com.example.EnglishCenterBE.models.Class;
+import com.example.EnglishCenterBE.utils.Constants;
+import com.example.EnglishCenterBE.utils.StringUtil;
 
 @Path("/manager")
 public class ManagerResource {
@@ -25,7 +31,12 @@ public class ManagerResource {
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response addClass(String jo) {
+	public Response addClass(@Context HttpHeaders httpHeaders,String jo) {
+		String token = httpHeaders.getHeaderString("Authorization");
+        Account account = StringUtil.verifyUser(token);
+        if (!account.getRole().equals(Constants.Role.MANAGER)) {
+            return Response.status(400).build();
+        }
 		boolean isSuccess =new ManagerService().getInstance().addClass(jo);
 		if(isSuccess) 
 			return Response.ok().build();
@@ -36,7 +47,12 @@ public class ManagerResource {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response getClass(@PathParam("id") String id) throws Exception {
+	public Response getClass(@Context HttpHeaders httpHeaders,@PathParam("id") String id) throws Exception {
+		String token = httpHeaders.getHeaderString("Authorization");
+        Account account = StringUtil.verifyUser(token);
+        if (!account.getRole().equals(Constants.Role.MANAGER)) {
+            return Response.status(400).build();
+        }
 		Class lop = new ManagerService().getInstance().getClass(id);
 		if (lop == null) return Response.status(422).build();
 		return Response.ok().entity(lop.toJSONObject()).build();
@@ -46,7 +62,12 @@ public class ManagerResource {
 	@PUT
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response updateClass(@PathParam("id") String id, String jo) throws Exception {
+	public Response updateClass(@Context HttpHeaders httpHeaders,@PathParam("id") String id, String jo) throws Exception {
+		String token = httpHeaders.getHeaderString("Authorization");
+        Account account = StringUtil.verifyUser(token);
+        if (!account.getRole().equals(Constants.Role.MANAGER)) {
+            return Response.status(400).build();
+        }
 		Boolean isSuccess = (new ManagerService()).getInstance().updateInforClass(id, jo);
 		if (isSuccess) return Response.ok().build();
 		return Response.status(500, "Failed").build();
@@ -56,7 +77,12 @@ public class ManagerResource {
 	@DELETE
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response deleteClass(@PathParam("id") String id) throws Exception {
+	public Response deleteClass(@Context HttpHeaders httpHeaders,@PathParam("id") String id) throws Exception {
+		String token = httpHeaders.getHeaderString("Authorization");
+        Account account = StringUtil.verifyUser(token);
+        if (!account.getRole().equals(Constants.Role.MANAGER)) {
+            return Response.status(400).build();
+        }
 		Boolean isSuccess = (new ManagerService()).getInstance().deleteClass(id);
 		if (isSuccess) return Response.ok().build();
 		return Response.status(500, "Failed").build();
@@ -66,7 +92,12 @@ public class ManagerResource {
 	@PUT
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response addStudents(@PathParam("id") String id, String jo) throws Exception {
+	public Response addStudents(@Context HttpHeaders httpHeaders,@PathParam("id") String id, String jo) throws Exception {
+		String token = httpHeaders.getHeaderString("Authorization");
+        Account account = StringUtil.verifyUser(token);
+        if (!account.getRole().equals(Constants.Role.MANAGER)) {
+            return Response.status(400).build();
+        }
 		Boolean isSuccess = (new ManagerService()).getInstance().addStudents(id, jo);
 		if (isSuccess) return Response.ok().build();
 		return Response.status(500, "Failed").build();
@@ -76,7 +107,12 @@ public class ManagerResource {
 	@PUT
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response deleteStudents(@PathParam("id") String id, String jo) throws Exception {
+	public Response deleteStudents(@Context HttpHeaders httpHeaders,@PathParam("id") String id, String jo) throws Exception {
+		String token = httpHeaders.getHeaderString("Authorization");
+        Account account = StringUtil.verifyUser(token);
+        if (!account.getRole().equals(Constants.Role.MANAGER)) {
+            return Response.status(400).build();
+        }
 		Boolean isSuccess = (new ManagerService()).getInstance().deleteStudents(id, jo);
 		if (isSuccess) return Response.ok().build();
 		return Response.status(500, "Failed").build();
@@ -86,7 +122,13 @@ public class ManagerResource {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response searchClass() throws Exception {
+	public Response searchClass(@Context HttpHeaders httpHeaders) throws Exception {
+		String token = httpHeaders.getHeaderString("Authorization");
+        Account account = StringUtil.verifyUser(token);
+        if (!account.getRole().equals(Constants.Role.MANAGER)) {
+            return Response.status(400).build();
+        }
+		
 		List<Class> classes;
 		classes = (new ManagerService()).getInstance().getAllClass();
 		
@@ -102,7 +144,13 @@ public class ManagerResource {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response searchClass(@PathParam("para") String para) throws Exception {
+	public Response searchClass(@Context HttpHeaders httpHeaders,@PathParam("para") String para) throws Exception {
+		String token = httpHeaders.getHeaderString("Authorization");
+        Account account = StringUtil.verifyUser(token);
+        if (!account.getRole().equals(Constants.Role.MANAGER)) {
+            return Response.status(400).build();
+        }
+		
 		List<Class> classes;
 		
 		classes = (new ManagerService()).getInstance().searchClassByName(para);
@@ -114,5 +162,32 @@ public class ManagerResource {
             list.add(studentClass.toJSONObject());
         }
         return Response.ok().entity(list).build();
+	}
+	@Path("/getAllTeacher")
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response getAllTeacher(@Context HttpHeaders httpHeaders) throws Exception {
+		String token = httpHeaders.getHeaderString("Authorization");
+        Account account = StringUtil.verifyUser(token);
+        if (!account.getRole().equals(Constants.Role.MANAGER)) {
+            return Response.status(400).build();
+        }
+        List<Map<String, String>> list = (new ManagerService()).getInstance().getAllAccountByRole(Constants.Role.TEACHER);
+		return Response.ok().entity(list).build();
+	}
+	
+	@Path("/XemLich")
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response getAllTeacher(@Context HttpHeaders httpHeaders,String jo) throws Exception {
+		String token = httpHeaders.getHeaderString("Authorization");
+        Account account = StringUtil.verifyUser(token);
+        if (!account.getRole().equals(Constants.Role.MANAGER)) {
+            return Response.status(400).build();
+        }
+        Calendar ca = (new ManagerService()).getInstance().getCalender(jo);
+		return Response.ok().entity(ca).build();
 	}
 }
