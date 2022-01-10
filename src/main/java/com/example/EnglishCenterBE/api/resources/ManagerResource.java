@@ -19,6 +19,7 @@ import javax.ws.rs.core.Response;
 
 import com.example.EnglishCenterBE.data.ManagerService;
 import com.example.EnglishCenterBE.models.Account;
+import com.example.EnglishCenterBE.models.Calendar;
 import com.example.EnglishCenterBE.models.Class;
 import com.example.EnglishCenterBE.utils.Constants;
 import com.example.EnglishCenterBE.utils.StringUtil;
@@ -161,5 +162,32 @@ public class ManagerResource {
             list.add(studentClass.toJSONObject());
         }
         return Response.ok().entity(list).build();
+	}
+	@Path("/getAllTeacher")
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response getAllTeacher(@Context HttpHeaders httpHeaders) throws Exception {
+		String token = httpHeaders.getHeaderString("Authorization");
+        Account account = StringUtil.verifyUser(token);
+        if (!account.getRole().equals(Constants.Role.MANAGER)) {
+            return Response.status(400).build();
+        }
+        List<Map<String, String>> list = (new ManagerService()).getInstance().getAllAccountByRole(Constants.Role.TEACHER);
+		return Response.ok().entity(list).build();
+	}
+	
+	@Path("/XemLich")
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response getAllTeacher(@Context HttpHeaders httpHeaders,String jo) throws Exception {
+		String token = httpHeaders.getHeaderString("Authorization");
+        Account account = StringUtil.verifyUser(token);
+        if (!account.getRole().equals(Constants.Role.MANAGER)) {
+            return Response.status(400).build();
+        }
+        Calendar ca = (new ManagerService()).getInstance().getCalender(jo);
+		return Response.ok().entity(ca).build();
 	}
 }
