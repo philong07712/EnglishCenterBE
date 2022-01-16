@@ -1,5 +1,6 @@
 package com.example.EnglishCenterBE.api.resources;
 
+import com.example.EnglishCenterBE.data.filter.CorsFilter;
 import com.fasterxml.jackson.core.util.JacksonFeature;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
@@ -16,11 +17,12 @@ public class ApplicationConfig extends ResourceConfig {
         packages("com.example.EnglishCenterBE");
         register(MultiPartFeature.class);
         register(JacksonFeature.class);
+        register(CorsFilter.class);
         System.out.println("Init application");
         try {
             //TODO: change path before push to heroku
-            FileInputStream serviceAccount = new FileInputStream("./ServiceAccountKey.json");
-//            FileInputStream serviceAccount = new FileInputStream("C:\\Users\\OS\\Desktop\\Work\\EnglishCenterBE\\ServiceAccountKey.json");
+//            FileInputStream serviceAccount = new FileInputStream("./ServiceAccountKey.json");
+            FileInputStream serviceAccount = new FileInputStream("C:\\Users\\OS\\Desktop\\Work\\EnglishCenterBE\\ServiceAccountKey.json");
             FirebaseOptions options = new FirebaseOptions.Builder()
                     .setCredentials(GoogleCredentials.fromStream(serviceAccount))
                     .setDatabaseUrl("https://englishcenter-6e5e5-default-rtdb.firebaseio.com")
