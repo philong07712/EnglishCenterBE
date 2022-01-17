@@ -8,10 +8,10 @@ public class Score {
     private String studentId;
     private String classId;
     private String className;
-    private double btScore = -1;
-    private double ckScore = -1;
-    private double gkScore = -1;
-    private double tbScore = -1;
+    private double docScore = -1;
+    private double noiScore = -1;
+    private double vietScore = -1;
+    private double ngheScore = -1;
 
     public Score() {
 
@@ -32,17 +32,17 @@ public class Score {
             if (jo.get("TenLop") != null) {
                 score.className = (String) jo.get("TenLop");
             }
-            if (jo.get("DiemBT") != null) {
-                score.btScore = Double.parseDouble((String) jo.get("DiemBT"));
+            if (jo.get("DiemDoc") != null) {
+                score.docScore = Double.parseDouble((String) jo.get("DiemDoc"));
             }
-            if (jo.get("DiemCK") != null) {
-                score.ckScore = Double.parseDouble((String) jo.get("DiemCK"));
+            if (jo.get("DiemNoi") != null) {
+                score.noiScore = Double.parseDouble((String) jo.get("DiemNoi"));
             }
-            if (jo.get("DiemGK") != null) {
-                score.gkScore = Double.parseDouble((String) jo.get("DiemGK"));
+            if (jo.get("DiemViet") != null) {
+                score.vietScore = Double.parseDouble((String) jo.get("DiemViet"));
             }
-            if (jo.get("DiemTB") != null) {
-                score.tbScore = Double.parseDouble((String) jo.get("DiemTB"));
+            if (jo.get("DiemNghe") != null) {
+                score.ngheScore = Double.parseDouble((String) jo.get("DiemNghe"));
             }
             return score;
         } catch (Exception e) {
@@ -57,17 +57,17 @@ public class Score {
         jo.put("MaHocVien", studentId);
         jo.put("MaLop", classId);
         jo.put("TenLop", className);
-        if (btScore != -1) {
-            jo.put("DiemBT", btScore + "");
+        if (docScore != -1) {
+            jo.put("DiemDoc", docScore + "");
         }
-        if (ckScore != -1) {
-            jo.put("DiemCK", ckScore + "");
+        if (noiScore != -1) {
+            jo.put("DiemNoi", noiScore + "");
         }
-        if (gkScore != -1) {
-            jo.put("DiemGK", gkScore + "");
+        if (vietScore != -1) {
+            jo.put("DiemViet", vietScore + "");
         }
-        if (tbScore != -1) {
-            jo.put("DiemTB", tbScore + "");
+        if (ngheScore != -1) {
+            jo.put("DiemNghe", ngheScore + "");
         }
         return jo;
     }
@@ -104,35 +104,35 @@ public class Score {
         this.className = className;
     }
 
-    public double getBtScore() {
-        return btScore;
+    public double getDocScore() {
+        return docScore;
     }
 
-    public void setBtScore(double btScore) {
-        this.btScore = btScore;
+    public void setDocScore(double docScore) {
+        this.docScore = docScore;
     }
 
-    public double getCkScore() {
-        return ckScore;
+    public double getNoiScore() {
+        return noiScore;
     }
 
-    public void setCkScore(double ckScore) {
-        this.ckScore = ckScore;
+    public void setNoiScore(double noiScore) {
+        this.noiScore = noiScore;
     }
 
-    public double getGkScore() {
-        return gkScore;
+    public double getVietScore() {
+        return vietScore;
     }
 
-    public void setGkScore(double gkScore) {
-        this.gkScore = gkScore;
+    public void setVietScore(double vietScore) {
+        this.vietScore = vietScore;
     }
 
-    public double getTbScore() {
-        return tbScore;
+    public double getNgheScore() {
+        return ngheScore;
     }
 
-    public void setTbScore(double tbScore) {
-        this.tbScore = tbScore;
+    public void setNgheScore(double ngheScore) {
+        this.ngheScore = ngheScore;
     }
 }
