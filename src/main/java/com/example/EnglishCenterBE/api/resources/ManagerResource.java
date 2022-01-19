@@ -57,7 +57,19 @@ public class ManagerResource {
         }
 		Class lop = new ManagerService().getInstance().getClass(id);
 		if (lop == null) return Response.status(422).build();
-		return Response.ok().entity(lop.toJSONObject()).build();
+		Map<String, Object> lops = lop.toJSONObject();
+		
+		if(lop.getStudents()!=null) {
+			List<String> students = lop.getStudents();
+	    	Map<String, Object> names = new HashMap<String, Object>();
+	    	for(String idAcc: students) {
+	    		Account acc = AccountService.getInstance().getAccount(idAcc);
+	    		names.put(idAcc, acc.getName());
+	    	}
+	    	lops.put("HocVien", names);
+		}
+    	
+		return Response.ok().entity(lops).build();
 	}
 	
 	@Path("/{id}/updateInfor")
@@ -138,16 +150,17 @@ public class ManagerResource {
 		
 		List<Map<String, Object>> list = new ArrayList<>();
         for (Class studentClass : classes) {
-        	List<String> students = studentClass.getStudents();
-        	Map<String, Object> names = new HashMap<String, Object>();
-        	for(String id: students) {
-        		Account acc = AccountService.getInstance().getAccount(id);
-        		names.put(id, acc.getName());
-        	}
         	Map<String, Object> lops = studentClass.toJSONObject();
-        	lops.put("HocVien", names);
+        	if(studentClass.getStudents()!=null) {
+	        	List<String> students = studentClass.getStudents();
+	        	Map<String, Object> names = new HashMap<String, Object>();
+	        	for(String id: students) {
+	        		Account acc = AccountService.getInstance().getAccount(id);
+	        		names.put(id, acc.getName());
+	        	}
+	        	lops.put("HocVien", names);
+        	}
             list.add(lops);
-            
         }
         
         return Response.ok().entity(list).build();
@@ -171,16 +184,17 @@ public class ManagerResource {
 		
 		List<Map<String, Object>> list = new ArrayList<>();
 		for (Class studentClass : classes) {
-        	List<String> students = studentClass.getStudents();
-        	Map<String, Object> names = new HashMap<String, Object>();
-        	for(String id: students) {
-        		Account acc = AccountService.getInstance().getAccount(id);
-        		names.put(id, acc.getName());
-        	}
         	Map<String, Object> lops = studentClass.toJSONObject();
-        	lops.put("HocVien", names);
+        	if(studentClass.getStudents()!=null) {
+	        	List<String> students = studentClass.getStudents();
+	        	Map<String, Object> names = new HashMap<String, Object>();
+	        	for(String id: students) {
+	        		Account acc = AccountService.getInstance().getAccount(id);
+	        		names.put(id, acc.getName());
+	        	}
+	        	lops.put("HocVien", names);
+        	}
             list.add(lops);
-            
         }
         return Response.ok().entity(list).build();
 	}
