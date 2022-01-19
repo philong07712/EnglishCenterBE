@@ -1,6 +1,7 @@
 package com.example.EnglishCenterBE.api.resources;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,6 +18,7 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import com.example.EnglishCenterBE.data.AccountService;
 import com.example.EnglishCenterBE.data.ManagerService;
 import com.example.EnglishCenterBE.models.Account;
 import com.example.EnglishCenterBE.models.Calendar;
@@ -136,8 +138,18 @@ public class ManagerResource {
 		
 		List<Map<String, Object>> list = new ArrayList<>();
         for (Class studentClass : classes) {
-            list.add(studentClass.toJSONObject());
+        	List<String> students = studentClass.getStudents();
+        	Map<String, Object> names = new HashMap<String, Object>();
+        	for(String id: students) {
+        		Account acc = AccountService.getInstance().getAccount(id);
+        		names.put(id, acc.getName());
+        	}
+        	Map<String, Object> lops = studentClass.toJSONObject();
+        	lops.put("HocVien", names);
+            list.add(lops);
+            
         }
+        
         return Response.ok().entity(list).build();
 	}
 	@Path("/search/{para}")
@@ -158,8 +170,17 @@ public class ManagerResource {
 		if (classes == null) return Response.status(422).build();
 		
 		List<Map<String, Object>> list = new ArrayList<>();
-        for (Class studentClass : classes) {
-            list.add(studentClass.toJSONObject());
+		for (Class studentClass : classes) {
+        	List<String> students = studentClass.getStudents();
+        	Map<String, Object> names = new HashMap<String, Object>();
+        	for(String id: students) {
+        		Account acc = AccountService.getInstance().getAccount(id);
+        		names.put(id, acc.getName());
+        	}
+        	Map<String, Object> lops = studentClass.toJSONObject();
+        	lops.put("HocVien", names);
+            list.add(lops);
+            
         }
         return Response.ok().entity(list).build();
 	}
