@@ -1,7 +1,9 @@
 package com.example.EnglishCenterBE.api.resources;
 
+import com.example.EnglishCenterBE.data.AccountService;
 import com.example.EnglishCenterBE.data.GeneralService;
 import com.example.EnglishCenterBE.models.Account;
+import com.example.EnglishCenterBE.utils.Constants;
 import com.example.EnglishCenterBE.utils.RoleUtils;
 import com.example.EnglishCenterBE.utils.StringUtil;
 
@@ -46,7 +48,7 @@ public class GeneralResource {
     }
 
     @Path("info")
-    @POST
+    @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getInfo(@Context HttpHeaders httpHeaders) throws Exception {
         String token = httpHeaders.getHeaderString("Authorization");
@@ -57,4 +59,19 @@ public class GeneralResource {
         }
         return Response.ok().entity(info.toJSONObject(true)).build();
     }
+
+    @Path("info")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response postInfo(@Context HttpHeaders httpHeaders, String jo) throws Exception {
+        String token = httpHeaders.getHeaderString("Authorization");
+        Account account = StringUtil.verifyUser(token);
+        Boolean isSuccess = AccountService.getInstance().updateAccountGeneral(account.getUsername(), jo);
+        if (!isSuccess) {
+            return Response.status(400).build();
+        }
+        return Response.ok().build();
+    }
+
 }

@@ -119,6 +119,20 @@ public class AccountService {
 		}
 		return false;
 	}
+
+	public boolean updateAccountGeneral(String requestUsername, String jo) {
+		try {
+			JSONObject obj = (JSONObject) new JSONParser().parse(jo);
+			String username = (String) obj.get("TK");
+			if (requestUsername.equals(username)) {
+				return updateAccount(jo);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
 	public Boolean deleteAccount(String UserName) {
 		try {
 			

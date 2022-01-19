@@ -51,6 +51,8 @@ public class TeacherService {
             for (Score score : scores) {
                 score.setClassId(classId);
                 score.setClassName(className);
+                Account account = AccountService.getInstance().getAccount(score.getStudentId());
+                score.setStudentName(account.getName());
                 ScoreService.addScore(score);
             }
         } catch (Exception e) {

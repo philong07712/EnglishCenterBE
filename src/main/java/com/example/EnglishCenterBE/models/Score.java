@@ -8,11 +8,11 @@ public class Score {
     private String studentId;
     private String classId;
     private String className;
+    private String studentName;
     private double docScore = -1;
     private double noiScore = -1;
     private double vietScore = -1;
     private double ngheScore = -1;
-
     public Score() {
 
     }
@@ -31,6 +31,9 @@ public class Score {
             }
             if (jo.get("TenLop") != null) {
                 score.className = (String) jo.get("TenLop");
+            }
+            if (jo.get("TenHocVien") != null) {
+                score.studentName = (String) jo.get("TenHocVien");
             }
             if (jo.get("DiemDoc") != null) {
                 score.docScore = Double.parseDouble((String) jo.get("DiemDoc"));
@@ -57,6 +60,7 @@ public class Score {
         jo.put("MaHocVien", studentId);
         jo.put("MaLop", classId);
         jo.put("TenLop", className);
+        jo.put("TenHocVien", studentName);
         if (docScore != -1) {
             jo.put("DiemDoc", docScore + "");
         }
@@ -134,5 +138,13 @@ public class Score {
 
     public void setNgheScore(double ngheScore) {
         this.ngheScore = ngheScore;
+    }
+
+    public String getStudentName() {
+        return studentName;
+    }
+
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
     }
 }
