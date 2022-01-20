@@ -42,7 +42,12 @@ public class Account {
                 account.identityId = (String) jo.get("MaCanCuoc");
             }
             if (jo.get("NgaySinh") != null) {
-                account.bornDate = ((Timestamp) jo.get("NgaySinh")).toDate();
+                if (jo.get("NgaySinh") instanceof String) {
+                    String dateString = (String) jo.get("NgaySinh");
+                    account.bornDate = Timestamp.parseTimestamp(dateString).toDate();
+                } else {
+                    account.bornDate = ((Timestamp) jo.get("NgaySinh")).toDate();
+                }
             }
             if (jo.get("GioiTinh") != null) {
                 account.sex = (Boolean) jo.get("GioiTinh");

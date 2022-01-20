@@ -103,8 +103,14 @@ public class AccountService {
 				acc.setName((String) obj.get("HoTen"));
 			if (obj.get("MaCanCuoc")!=null)
 				acc.setIdentityId((String) obj.get("MaCanCuoc"));
-			if (obj.get("NgaySinh")!=null)
-            	acc.setBornDate(((Timestamp) obj.get("NgaySinh")).toDate());
+			if (obj.get("NgaySinh")!=null) {
+				if (obj.get("NgaySinh") instanceof String) {
+					String dateString = (String) obj.get("NgaySinh");
+					acc.setBornDate(Timestamp.parseTimestamp(dateString).toDate());
+				} else {
+					acc.setBornDate(((Timestamp) obj.get("NgaySinh")).toDate());
+				}
+			}
 			if (obj.get("GioiTinh")!=null)
 				acc.setSex((Boolean) obj.get("GioiTinh"));
 			if (obj.get("DiaChi")!=null)
