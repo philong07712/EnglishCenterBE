@@ -1,6 +1,7 @@
 package com.example.EnglishCenterBE.api.resources;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,6 +18,7 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import com.example.EnglishCenterBE.data.AccountService;
 import com.example.EnglishCenterBE.data.ManagerService;
 import com.example.EnglishCenterBE.models.Account;
 import com.example.EnglishCenterBE.models.Calendar;
@@ -55,7 +57,19 @@ public class ManagerResource {
         }
 		Class lop = new ManagerService().getInstance().getClass(id);
 		if (lop == null) return Response.status(422).build();
-		return Response.ok().entity(lop.toJSONObject()).build();
+		Map<String, Object> lops = lop.toJSONObject();
+		
+		if(lop.getStudents()!=null) {
+			List<String> students = lop.getStudents();
+	    	Map<String, Object> names = new HashMap<String, Object>();
+	    	for(String idAcc: students) {
+	    		Account acc = AccountService.getInstance().getAccount(idAcc);
+	    		names.put(idAcc, acc.getName());
+	    	}
+	    	lops.put("HocVien", names);
+		}
+    	
+		return Response.ok().entity(lops).build();
 	}
 	
 	@Path("/{id}/updateInfor")
@@ -136,8 +150,19 @@ public class ManagerResource {
 		
 		List<Map<String, Object>> list = new ArrayList<>();
         for (Class studentClass : classes) {
-            list.add(studentClass.toJSONObject());
+        	Map<String, Object> lops = studentClass.toJSONObject();
+        	if(studentClass.getStudents()!=null) {
+	        	List<String> students = studentClass.getStudents();
+	        	Map<String, Object> names = new HashMap<String, Object>();
+	        	for(String id: students) {
+	        		Account acc = AccountService.getInstance().getAccount(id);
+	        		names.put(id, acc.getName());
+	        	}
+	        	lops.put("HocVien", names);
+        	}
+            list.add(lops);
         }
+        
         return Response.ok().entity(list).build();
 	}
 	@Path("/search/{para}")
@@ -158,8 +183,18 @@ public class ManagerResource {
 		if (classes == null) return Response.status(422).build();
 		
 		List<Map<String, Object>> list = new ArrayList<>();
-        for (Class studentClass : classes) {
-            list.add(studentClass.toJSONObject());
+		for (Class studentClass : classes) {
+        	Map<String, Object> lops = studentClass.toJSONObject();
+        	if(studentClass.getStudents()!=null) {
+	        	List<String> students = studentClass.getStudents();
+	        	Map<String, Object> names = new HashMap<String, Object>();
+	        	for(String id: students) {
+	        		Account acc = AccountService.getInstance().getAccount(id);
+	        		names.put(id, acc.getName());
+	        	}
+	        	lops.put("HocVien", names);
+        	}
+            list.add(lops);
         }
         return Response.ok().entity(list).build();
 	}
