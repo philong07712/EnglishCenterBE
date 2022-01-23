@@ -12,7 +12,7 @@ public class Constants {
         public static String ADMIN = "ad";
         public static String MANAGER = "QL";
         public static String TEACHER = "GV";
-        public static String STUDENT = "HS";
+        public static String STUDENT = "HV";
     }
 
     public static class Secret {

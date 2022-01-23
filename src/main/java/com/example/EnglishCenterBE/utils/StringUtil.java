@@ -29,6 +29,7 @@ public class StringUtil {
     }
 
     public static Account verifyUser(String token) {
+        if (token == null || token.isEmpty()) return null;
         Account account = new Account();
         String subject = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).
                 getBody().getSubject();

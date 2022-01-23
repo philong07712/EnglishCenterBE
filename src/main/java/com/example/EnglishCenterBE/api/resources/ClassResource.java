@@ -31,6 +31,7 @@ public class ClassResource {
         String token = httpHeaders.getHeaderString("Authorization");
         Account account = StringUtil.verifyUser(token);
         // if not that specific student then we will not show the data
+        if (account == null) return Response.status(400).build();
         if (account.getRole().equals(Constants.Role.STUDENT)) {
             if (!account.getUsername().equals(username)) {
                 return Response.status(400).build();
