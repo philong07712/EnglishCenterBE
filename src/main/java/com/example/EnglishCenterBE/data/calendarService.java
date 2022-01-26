@@ -80,12 +80,12 @@ public class calendarService {
 	
 	public Calendar createCalendar(String teacherId,List<String> students,String idClass) {
 		Calendar ca = new Calendar();
-		
-		if (teacherId.isEmpty()) {
+		if (!teacherId.isEmpty()) {
 			List<Class> classes = ClassService.getClassListWithTeacher(teacherId);
+			
 			if(classes!=null)
 			for (Class lop:classes) {
-				if(lop.getTime()!=null && !lop.getTime().isEmpty() && !lop.getId().equals(idClass) && ToListDay(ToListString(lop.getTime()))!=null) {
+				if(lop.isActive() && lop.getTime()!=null && !lop.getTime().isEmpty() && !lop.getId().equals(idClass) && ToListDay(ToListString(lop.getTime()))!=null) {
 					List<weekdays> k = ToListDay(ToListString(lop.getTime()));
 					if (k.size()!=0) ca.addAll(k);
 				}
