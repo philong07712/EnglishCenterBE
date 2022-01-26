@@ -126,7 +126,8 @@ public class ManagerService {
 			newStudents = (List<String>) obj.get("students");
 			
 			for(String idHV: newStudents) {
-        		if (AccountService.getInstance().getAccount(idHV)==null) return false;
+				Account acc = AccountService.getInstance().getAccount(idHV);
+        		if (acc==null || !acc.isActive()) return false;
         	}
 			
 			if(newStudents.size()==0) return false;
