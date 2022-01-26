@@ -125,6 +125,10 @@ public class ManagerService {
 			List<String> newStudents = new ArrayList<String>();
 			newStudents = (List<String>) obj.get("students");
 			
+			for(String idHV: newStudents) {
+        		if (AccountService.getInstance().getAccount(idHV)==null) return false;
+        	}
+			
 			if(newStudents.size()==0) return false;
 			Set<String> newSet = new HashSet<String>(newStudents);
 			
