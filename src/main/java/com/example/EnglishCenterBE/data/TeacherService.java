@@ -9,10 +9,7 @@ import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class TeacherService {
     public static Firestore db = FirestoreClient.getFirestore();
@@ -25,16 +22,28 @@ public class TeacherService {
             ApiFuture<DocumentSnapshot> snapshot = documentRef.get();
             Class detailClass =  Class.JSONParser(snapshot.get().getData());
             if (detailClass != null) {
-                map.put("LopHoc", detailClass.toJSONObject());
+                // fix id: name
+                Map<String, Object> classMap = detailClass.toJSONObject();
+                Map<String, String> studentMap = new HashMap<>();
                 // Lay list student ve
                 if (detailClass.getStudents() != null) {
                     List<Map<String, Object>> studentList = new ArrayList<>();
                     for (String studentId : detailClass.getStudents()) {
+                        studentMap.put(studentId, null);
                         Score score = ScoreService.getScoreDetail(studentId, classId);
                         if (score != null) {
                             studentList.add(score.toJSONObject());
+                            studentMap.put(studentId, score.getStudentName());
+                        } else {
+                            // case student don't have data yet, we will only return name
+                            Account acc = GeneralService.getInformation(studentId);
+                            if (acc != null) {
+                                studentMap.put(studentId, acc.getName());
+                            }
                         }
                     }
+                    classMap.put("HocVien", studentMap);
+                    map.put("LopHoc", classMap);
                     map.put("HocVien", studentList);
                 }
                 return map;
