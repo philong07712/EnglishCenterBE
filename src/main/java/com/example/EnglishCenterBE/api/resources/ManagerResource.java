@@ -213,7 +213,7 @@ public class ManagerResource {
 	}
 	
 	@Path("/XemLich")
-	@GET
+	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response getAllTeacher(@Context HttpHeaders httpHeaders,String jo) throws Exception {
