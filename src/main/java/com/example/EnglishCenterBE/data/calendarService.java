@@ -63,6 +63,8 @@ public class calendarService {
 	}
 	
 	public boolean CheckCalendar(String input,String teacherId,List<String> students,String idClass) {
+		if (input.trim().isEmpty()) return true;
+		
 		List<weekdays> inputListDay = ToListDay(ToListString(input));
 		if(inputListDay==null) return false;
 		
